@@ -90,7 +90,8 @@ namespace LIFX_Net
                     }
                     else
                     {
-                        MessageRecieved.Invoke(this, receivedMessage);
+                        if (MessageRecieved != null)
+                            MessageRecieved.Invoke(this, receivedMessage);
                     }
                 }
             }

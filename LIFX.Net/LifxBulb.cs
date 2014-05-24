@@ -52,10 +52,10 @@ namespace LIFX_Net
         }
 
 
-        public async Task SetLabelCommand(string newLabel)
+        public async Task<LifxLabelMessage> SetLabelCommand(string newLabel)
         {
             LifxSetLabelCommand command = new LifxSetLabelCommand(newLabel);
-            await LifxCommunicator.Instance.SendCommand(command, this);
+            return await LifxCommunicator.Instance.SendCommand(command, this) as LifxLabelMessage;
         }
 
         public async Task<LifxLightStatusMessage> GetLightStatusCommand()
