@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D31A3769-78E6-4A6E-85E5-4DDF5B30E8F1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LIFX.Net</RootNamespace>
+    <AssemblyName>LIFX.Net</AssemblyName>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TargetFrameworkProfile>Profile32</TargetFrameworkProfile>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <TargetPlatform Include="WindowsPhoneApp, Version=8.1" />
+    <TargetPlatform Include="Windows, Version=8.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="LifxBulb.cs" />
+    <Compile Include="LifxColor.cs" />
+    <Compile Include="LifxCommunicator.cs" />
+    <Compile Include="LifxDataPacket.cs" />
+    <Compile Include="LifxHelper.cs" />
+    <Compile Include="LifxLightStatus.cs" />
+    <Compile Include="LifxPanController.cs" />
+    <Compile Include="Messages\Commands\LifxCommand.cs" />
+    <Compile Include="Messages\Commands\LifxGetLabelCommand.cs" />
+    <Compile Include="Messages\Commands\LifxGetLightStatusCommand.cs" />
+    <Compile Include="Messages\Commands\LifxGetPanGatewayCommand.cs" />
+    <Compile Include="Messages\Commands\LifxGetPowerStateCommand.cs" />
+    <Compile Include="Messages\Commands\LifxGetTagLabelsCommand.cs" />
+    <Compile Include="Messages\Commands\LifxGetTagsCommand.cs" />
+    <Compile Include="Messages\Commands\LifxSetDimAbsoluteCommand.cs" />
+    <Compile Include="Messages\Commands\LifxSetLabelCommand.cs" />
+    <Compile Include="Messages\Commands\LifxSetLightStateCommand.cs" />
+    <Compile Include="Messages\Commands\LifxSetPowerStateCommand.cs" />
+    <Compile Include="Messages\Commands\LifxSetTagsCommand.cs" />
+    <Compile Include="Messages\ResponseMessages\LifxLabelMessage.cs" />
+    <Compile Include="Messages\ResponseMessages\LifxLightStatusMessage.cs" />
+    <Compile Include="Messages\ResponseMessages\LifxMessage.cs" />
+    <Compile Include="Messages\ResponseMessages\LifxPanGatewayStateMessage.cs" />
+    <Compile Include="Messages\ResponseMessages\LifxPowerStateMessage.cs" />
+    <Compile Include="Messages\ResponseMessages\LifxTagLabelMessage.cs" />
+    <Compile Include="Messages\ResponseMessages\LifxTagsMessage.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
