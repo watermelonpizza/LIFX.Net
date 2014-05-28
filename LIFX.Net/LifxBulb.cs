@@ -45,6 +45,12 @@ namespace LIFX_Net
             return await LifxCommunicator.Instance.SendCommand(command, this) as LifxPowerStateMessage;
         }
 
+        public async Task<LifxPowerStateMessage> SetPowerStateCommand(string stateToSet)
+        {
+            LifxSetPowerStateCommand command = new LifxSetPowerStateCommand((LifxPowerState)Enum.Parse(typeof(LifxPowerState), stateToSet, true));
+            return await LifxCommunicator.Instance.SendCommand(command, this) as LifxPowerStateMessage;
+        }
+
         public async Task<LifxLabelMessage> GetLabelCommand()
         {
             LifxGetLabelCommand command = new LifxGetLabelCommand();
@@ -65,7 +71,7 @@ namespace LIFX_Net
         }
 
 
-        public async Task SetColorCommand(LifxColor color, UInt32 fadeTime)
+        public async Task SetColorCommand(LifxColour color, UInt32 fadeTime)
         {
             LifxSetLightStateCommand command = new LifxSetLightStateCommand(color.Hue, color.Saturation, color.Luminosity, color.Kelvin, fadeTime);
             await LifxCommunicator.Instance.SendCommand(command, this);

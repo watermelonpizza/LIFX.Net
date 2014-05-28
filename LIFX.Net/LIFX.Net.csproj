@@ -39,7 +39,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LifxBulb.cs" />
-    <Compile Include="LifxColor.cs" />
+    <Compile Include="LifxColour.cs" />
     <Compile Include="LifxCommunicator.cs" />
     <Compile Include="LifxDataPacket.cs" />
     <Compile Include="LifxHelper.cs" />

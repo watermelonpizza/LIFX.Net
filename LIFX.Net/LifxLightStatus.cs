@@ -4,7 +4,7 @@ namespace LIFX_Net
 {
     public class LifxLightStatus
     {
-        public LifxColor Colour { get; set; }
+        public LifxColour Colour { get; set; }
         public LifxPowerState PowerState { get; set; }
         public UInt16 DimState { get; set; }
         public String Label { get; set; }
@@ -12,7 +12,7 @@ namespace LIFX_Net
 
         public LifxLightStatus()
         {
-            Colour = new LifxColor();
+            Colour = new LifxColour();
             PowerState = LifxPowerState.Off;
             DimState = 0;
             Label = "";
