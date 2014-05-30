@@ -48,7 +48,7 @@ namespace LIFX_Net
                 case MessagePacketType.Tags:
                     return new LifxTagsMessage(packet);
                 default:
-                    return null;//throw new NotImplementedException();
+                    return null;
             }
         }
 

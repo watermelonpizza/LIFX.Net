@@ -57,9 +57,9 @@ namespace LIFX_Net
             {
                 return FromRgbColor(ColourList[colourName.ToUpper()]);
             }
-            catch (KeyNotFoundException)
+            catch (KeyNotFoundException e)
             {
-                throw new ColorNotFoundException();
+                throw new ColorNotFoundException("Colour not found, invalid key", e);
             }
         }
 

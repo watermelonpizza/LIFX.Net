@@ -24,11 +24,15 @@ namespace LIFX_Net
         [XmlIgnore()]
         public LifxPanController PanController { get; set; }
 
+        [XmlAttribute()]
+        public string PanControllerMACAddress { get; set; }
+
         public LifxBulb() { }
 
         public LifxBulb(LifxPanController panController, string ipAddress, string macAddress)
         {
             PanController = panController;
+            PanControllerMACAddress = panController.MACAddress;
             IPAddress = ipAddress;
             MACAddress = macAddress;
         }
