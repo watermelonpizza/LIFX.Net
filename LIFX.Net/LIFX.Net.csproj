@@ -8,7 +8,7 @@
     <ProjectGuid>{D31A3769-78E6-4A6E-85E5-4DDF5B30E8F1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LIFX.Net</RootNamespace>
+    <RootNamespace>LIFX_Net</RootNamespace>
     <AssemblyName>LIFX.Net</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
@@ -52,11 +52,14 @@
     <Compile Include="Messages\Commands\LifxGetPowerStateCommand.cs" />
     <Compile Include="Messages\Commands\LifxGetTagLabelsCommand.cs" />
     <Compile Include="Messages\Commands\LifxGetTagsCommand.cs" />
+    <Compile Include="Messages\Commands\LifxGetWiFiFirmwareCommand.cs" />
+    <Compile Include="Messages\Commands\LifxGetWiFiInfoCommand.cs" />
     <Compile Include="Messages\Commands\LifxSetDimAbsoluteCommand.cs" />
     <Compile Include="Messages\Commands\LifxSetLabelCommand.cs" />
     <Compile Include="Messages\Commands\LifxSetLightStateCommand.cs" />
     <Compile Include="Messages\Commands\LifxSetPowerStateCommand.cs" />
     <Compile Include="Messages\Commands\LifxSetTagsCommand.cs" />
+    <Compile Include="Messages\Commands\LifxSetWaveformCommand.cs" />
     <Compile Include="Messages\ResponseMessages\LifxLabelMessage.cs" />
     <Compile Include="Messages\ResponseMessages\LifxLightStatusMessage.cs" />
     <Compile Include="Messages\ResponseMessages\LifxMessage.cs" />
@@ -64,6 +67,8 @@
     <Compile Include="Messages\ResponseMessages\LifxPowerStateMessage.cs" />
     <Compile Include="Messages\ResponseMessages\LifxTagLabelMessage.cs" />
     <Compile Include="Messages\ResponseMessages\LifxTagsMessage.cs" />
+    <Compile Include="Messages\ResponseMessages\LifxWiFiFirmwareMessage.cs" />
+    <Compile Include="Messages\ResponseMessages\LifxWiFiInfoMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

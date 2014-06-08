@@ -20,9 +20,6 @@ namespace LIFX_Net
         [XmlArray()]
         public List<LifxBulb> Bulbs { get; set; }
 
-        /// <summary>
-        /// Uninitialized bulb, for detection for instance
-        /// </summary>
         public LifxPanController()
         {
             MACAddress = "";
@@ -30,6 +27,9 @@ namespace LIFX_Net
             Bulbs = new List<LifxBulb>();
         }
 
+        /// <summary>
+        /// Uninitialized bulb, for detection for instance
+        /// </summary>
         [XmlIgnore()]
         public static LifxPanController UninitializedPanController
         {

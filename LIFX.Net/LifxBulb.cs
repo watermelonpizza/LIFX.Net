@@ -11,21 +11,22 @@ namespace LIFX_Net
     {
         [XmlAttribute()]
         public string IPAddress { get; set; }
-
         [XmlAttribute()]
         public string MACAddress { get; set; }
-
         [XmlIgnore()]
         public Byte[] UID { get { return LifxHelper.StringToByteArray(MACAddress); } set { MACAddress = LifxHelper.ByteArrayToString(value); } }
-
-        [XmlAttribute()]
-        public string Label { get; set; }
-
         [XmlIgnore()]
         public LifxPanController PanController { get; set; }
-
         [XmlAttribute()]
         public string PanControllerMACAddress { get; set; }
+        [XmlAttribute()]
+        public string Label { get; set; }
+        [XmlAttribute()]
+        public UInt64 Tags { get; set; }
+        [XmlAttribute()]
+        public LifxPowerState IsOn { get; set; }
+        [XmlElement()]
+        public LifxColour Colour { get; set; }
 
         public LifxBulb() { }
 
@@ -35,6 +36,11 @@ namespace LIFX_Net
             PanControllerMACAddress = panController.MACAddress;
             IPAddress = ipAddress;
             MACAddress = macAddress;
+
+            Label = "";
+            Tags = 0;
+            IsOn = LifxPowerState.Off;
+            Colour = new LifxColour() { Luminosity = 65525 };
         }
 
         public async Task<LifxPowerStateMessage> GetPowerStateCommand()
@@ -75,9 +81,9 @@ namespace LIFX_Net
         }
 
 
-        public async Task SetColorCommand(LifxColour color, UInt32 fadeTime)
+        public async Task SetColorCommand(LifxColour colour, UInt32 fadeTime)
         {
-            LifxSetLightStateCommand command = new LifxSetLightStateCommand(color.Hue, color.Saturation, color.Luminosity, color.Kelvin, fadeTime);
+            LifxSetLightStateCommand command = new LifxSetLightStateCommand(colour.Hue, colour.Saturation, colour.Luminosity, colour.Kelvin, fadeTime);
             await LifxCommunicator.Instance.SendCommand(command, this);
         }
 
@@ -100,10 +106,28 @@ namespace LIFX_Net
             return await LifxCommunicator.Instance.SendCommand(command, this) as LifxTagLabelMessage;
         }
 
+        public async Task<LifxWiFiInfoMessage> GetWifiInfo()
+        {
+            LifxGetWiFiInfoCommand command = new LifxGetWiFiInfoCommand();
+            return await LifxCommunicator.Instance.SendCommand(command, this) as LifxWiFiInfoMessage;
+        }
+
         public async Task<LifxTagsMessage> SetTagsCommand(UInt64 tags)
         {
             LifxSetTagsCommand command = new LifxSetTagsCommand(tags);
             return await LifxCommunicator.Instance.SendCommand(command, this) as LifxTagsMessage;
+        }
+
+        public async Task SetWaveformCommand(Byte stream, Byte transient, LifxColour colour, UInt32 period, float cycles, UInt16 dutycycles, Waveform waveform)
+        {
+            LifxSetWaveformCommand command = new LifxSetWaveformCommand(stream, transient, colour.Hue, colour.Saturation, colour.Luminosity, colour.Kelvin, period, cycles, dutycycles, waveform);
+            await LifxCommunicator.Instance.SendCommand(command, this);
+        }
+
+        public async Task<LifxWiFiFirmwareMessage> GetWifiFirmwareState()
+        {
+            LifxGetWiFiFirmwareCommand command = new LifxGetWiFiFirmwareCommand();
+            return await LifxCommunicator.Instance.SendCommand(command, this) as LifxWiFiFirmwareMessage;
         }
     }
 }

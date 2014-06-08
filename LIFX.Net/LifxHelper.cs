@@ -12,8 +12,13 @@ namespace LIFX_Net
     {
         public const Int32 LIFX_PORT = 56700;
         public const String BROADCAST_IP_ADDRESS = "255.255.255.255";
-        private const String LOCAL_PREFIX_IP = "169.254.";
+        private const String LOCAL_PREFIX_IP = "169.254."; // Stops the phone from latching onto local IP addresses, bulbs are never going to be on the local IP address range
 
+        /// <summary>
+        /// Converts a byte array to a string, used for converting a MAC address in the form of a hex byte array to a string
+        /// </summary>
+        /// <param name="ba">The MAC address to convert</param>
+        /// <returns>String based MAC address</returns>
         public static string ByteArrayToString(byte[] ba)
         {
             StringBuilder hex = new StringBuilder(ba.Length * 2);
@@ -22,6 +27,11 @@ namespace LIFX_Net
             return hex.ToString();
         }
 
+        /// <summary>
+        /// Converts a string to a byte array, used for converting a MAC address in the form of a hex based string to a byte array
+        /// </summary>
+        /// <param name="hex">The hex based string</param>
+        /// <returns>Byte array of the MAC address</returns>
         public static byte[] StringToByteArray(String hex)
         {
             int NumberChars = hex.Length;
@@ -31,32 +41,74 @@ namespace LIFX_Net
             return bytes;
         }
 
+        /// <summary>
+        /// Converts a raw <see cref="LifxDataPacket">LifxDataPacket</see> to a <see cref="LifxMessage">LifxMessage</see>
+        /// </summary>
+        /// <param name="packet">Raw DataPacket to convert from</param>
+        /// <returns>A <see cref="LifxMessage">LifxMessage</see> if implemented or recognised otherwise null</returns>
         public static LifxMessage PacketToMessage(LifxDataPacket packet)
         {
             switch (MessagePacketTypeToEnum(packet.PacketType))
             {
-                case MessagePacketType.Label:
-                    return new LifxLabelMessage(packet);
-                case MessagePacketType.LightStatus:
-                    return new LifxLightStatusMessage(packet);
+                case MessagePacketType.Unknown:
+                    break;
                 case MessagePacketType.PanGateway:
                     return new LifxPanGatewayStateMessage(packet);
                 case MessagePacketType.PowerState:
                     return new LifxPowerStateMessage(packet);
-                case MessagePacketType.TagLabels:
-                    return new LifxTagLabelMessage(packet);
+                case MessagePacketType.WifiInfo:
+                    return new LifxWiFiInfoMessage(packet);
+                case MessagePacketType.WifiFirmwareState:
+                    return new LifxWiFiFirmwareMessage(packet);
+                case MessagePacketType.WifiState:
+                    break;
+                case MessagePacketType.AccessPoint:
+                    break;
+                case MessagePacketType.Label:
+                    return new LifxLabelMessage(packet);
                 case MessagePacketType.Tags:
                     return new LifxTagsMessage(packet);
+                case MessagePacketType.TagLabels:
+                    return new LifxTagLabelMessage(packet);
+                case MessagePacketType.LightStatus:
+                    return new LifxLightStatusMessage(packet);
+                case MessagePacketType.TimeState:
+                    break;
+                case MessagePacketType.ResetSwitchState:
+                    break;
+                case MessagePacketType.DummyLoad:
+                    break;
+                case MessagePacketType.MeshInfo:
+                    break;
+                case MessagePacketType.MeshFirmwareState:
+                    break;
+                case MessagePacketType.VersionState:
+                    break;
+                case MessagePacketType.Info:
+                    break;
+                case MessagePacketType.MCURailVoltage:
+                    break;
                 default:
                     return null;
             }
-        }
 
+            return null;
+        }
+        
+        /// <summary>
+        /// Internal use only. Parses the raw message packettype in int form to the formatted Enum type
+        /// </summary>
+        /// <param name="packetType">The packet type</param>
+        /// <returns>The enumerated type of <see cref="MessagePacketType">MessagePacketType</see></returns>
         private static MessagePacketType MessagePacketTypeToEnum(uint packetType)
         {
             return (MessagePacketType)Enum.Parse(typeof(MessagePacketType), packetType.ToString());
         }
 
+        /// <summary>
+        /// Gets the local /24 broadcast ip address (xxx.xxx.xxx.255)
+        /// </summary>
+        /// <returns>The broadcast IP as a string</returns>
         public static string GetLocalBroadcastIPAddress()
         {
             string[] myipsplit = IdentifyMyIp().Split('.');
@@ -64,7 +116,11 @@ namespace LIFX_Net
             return broadcastIP;
         }
 
-        public static string IdentifyMyIp()
+        /// <summary>
+        /// Internal use only. Gets the phones public IP address exclusing loopback and local IP addresses
+        /// </summary>
+        /// <returns>Returns the public IP address of the phone as a string</returns>
+        private static string IdentifyMyIp()
         {
             List<string> MyIPAddresses = new List<string>();
 
@@ -93,6 +149,10 @@ namespace LIFX_Net
         }
     }
 
+    /// <summary>
+    /// The type of service either TCP or UDP the bulb is willing to work with. 
+    /// Currently only UDP is implemented for this API
+    /// </summary>
     public enum LifxPanServiceType : byte
     {
         UDP = 0x01,
@@ -181,6 +241,17 @@ namespace LIFX_Net
         MCURailVoltage = 0x25
     }
 
+    public enum Waveform : byte
+    {
+        Saw = 0,
+        Sine = 1,
+        HalfSine = 2,
+        Triangle = 3,
+        Pulse = 4
+    }
+
+    #region Exception Classes
+
     public class BulbNotFoundException : Exception
     {
         public BulbNotFoundException() { }
@@ -201,6 +272,8 @@ namespace LIFX_Net
         public ColorNotFoundException(string message) : base(message) { }
         public ColorNotFoundException(string message, Exception inner) : base(message, inner) { }
     }
+
+    #endregion
 }
 
 
